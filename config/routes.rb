@@ -1,11 +1,21 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'users#index'
+  root to: 'posts#index'
   
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :new, :create]
+  resources :users, only: [:index, :show, :new, :create, :edit, :update] do
+    member do
+      get 'likes_posts'
+    end
+  end
+  
+  resources :posts, only: [:index, :show, :new, :create, :destroy] do
+    resources :likes, only: [:create, :destroy]
+  end
 end

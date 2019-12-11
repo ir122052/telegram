@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="list-styled">
+    <div class="media">
+      <img src="<%= gravatar_url(@post.user, { size: 50 }) %>" class="mr-3" alt="...">
+        <div class="media-body">
+          <div>
+            <%= link_to @post.user.name, user_path(@post.user) %><span class="text-muted">posted at <%= @post.created_at %></span>
+          </div>
+        <div>
+          <p>
+              <%= image_tag @post.image.url if @post.image? %>
+          </p>
+        </div>
+        <div>
+           <p><%= @post.content %></p>
+        </div>
+        <div class="d-flex justify-content-start">
+        <div class="mr-3">
+           <% if current_user.already_liked?(@post) %>
+             <%= button_to 'いいねを解除', post_like_path(@post), method: :delete %>
+           <% else %>
+             <%= button_to 'いいね', post_likes_path(@post) %>
+           <% end %>
+        </div>
+        <div>
+          <% if current_user == @post.user %>
+            <%= link_to '投稿の削除', @post, method: :delete, data: { confirm: "本当によろしいですか？" }, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+       </div>
+       </div>
+       <h4 class="mt-3">「いいね」したユーザ (<%= @post.likes.count %>)</h4>
+        <% @post.likes_users.each do |user| %>
+          <li><%= link_to user.name, user_path(user) %></li>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

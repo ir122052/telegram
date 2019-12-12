@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show, :edit, :update, :likes_posts]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :require_user_logged_in, only: [:show, :edit, :update, :destroy, :likes_posts]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   def index
     @users = User.order(id: :desc).page(params[:page]).per(25)
@@ -41,6 +41,13 @@ class UsersController < ApplicationController
         flash.now[:danger] = 'プロフィールを変更できませんでした。'
         render :edit
       end
+  end
+  
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:success] = '退会しました。'
+    redirect_to root_url
   end
   
   def likes_posts

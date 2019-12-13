@@ -60,3 +60,9 @@ gem 'carrierwave'
 
 # 画像の加工とか
 gem 'rmagick'
+
+gem 'fog-aws'
+
+group :production do
+  gem 'pg', '>= 0.18', '< 2.0'
+end

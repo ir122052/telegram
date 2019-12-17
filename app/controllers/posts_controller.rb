@@ -1,13 +1,14 @@
 class PostsController < ApplicationController
   before_action :require_user_logged_in, only: [:new, :show]
   before_action :correct_user, only: [:destroy]
+  
   def index
     @posts = Post.order(id: :desc).page(params[:page])
   end
 
   def show
     @post = Post.find(params[:id])
-    @like = Like.new
+   
   end
 
   def new

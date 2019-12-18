@@ -12,7 +12,7 @@
           </p>
        </div>
        <div>
-           <p><%= link_to post.content, post_path(post) %></p>
+           <p><%= link_to simple_format(h(post.content)), post_path(post) %></p>
        </div>
        <div class="mb-5">
            <a href="<%= post_path(post) %>" class="badge badge-secondary" >いいね数<%= post.likes.count %></a>
